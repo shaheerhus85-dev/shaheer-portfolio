@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Cursor</title>
+  <path fill="#F7F7F2" d="M10 7.5 56 32.2 36.8 36.8 31 56.5 10 7.5Z"/>
+  <path fill="#0A0A0A" d="m20.7 19.4 25 13.5-13.9 3.3-4.1 13.8-7-30.6Z" opacity=".92"/>
+  <path fill="#F7F7F2" d="m33.3 35.7 8.7 13.1-5.2 3.5-8.4-13.5 4.9-3.1Z"/>
+</svg>
