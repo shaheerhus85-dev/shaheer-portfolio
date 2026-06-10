@@ -1,164 +1,32 @@
 ﻿"use client";
 
 import { useEffect, useState } from "react";
-import type { IconType } from "react-icons";
-import {
-  SiClaude,
-  SiFigma,
-  SiFramer,
-  SiGithub,
-  SiGreensock,
-  SiHtml5,
-  SiLinear,
-  SiNextdotjs,
-  SiReact,
-  SiTailwindcss,
-  SiThreedotjs,
-  SiTypescript,
-  SiVercel
-} from "react-icons/si";
-import { VscVscode } from "react-icons/vsc";
 import Hero, { type HeroStateKey } from "@/components/hero/Hero";
-import styles from "./page.module.css";
-
-type SimpleStateSection = {
-  id: string;
-  label: string;
-  heading: string;
-  copy: string;
-  rows: string[];
-  href?: string;
-};
-
-type ReactIconTool = {
-  type: "react";
-  Icon: IconType;
-  colorClassName: string;
-};
-
-type ImageIconTool = {
-  type: "image";
-  src: string;
-};
-
-type StackToolIcon = ReactIconTool | ImageIconTool;
-
-type StackTool = {
-  name: string;
-  href: string;
-  icon: StackToolIcon;
-};
-
-type StackToolRow = {
-  title: string;
-  direction: "left" | "right";
-  items: StackTool[];
-};
+import SiteFooter from "@/components/footer/SiteFooter";
+import LabGithubSection from "@/components/lab/LabGithubSection";
+import LabPrototypingSection from "@/components/lab/LabPrototypingSection";
+import { MethodsSection } from "@/components/methods-section";
+import { ProblemsSection } from "@/components/problems-section";
+import { useLenis } from "@/components/providers/LenisProvider";
+import { StackToolsSection } from "@/components/stack";
+import { WorkflowsSection } from "@/components/workflows";
 
 const ABOUT_PROOF_ITEMS = [
   {
     number: "01",
-    text: "AI-assisted build workflow"
+    lines: ["AI-assisted", "build workflow"]
   },
   {
     number: "02",
-    text: "Automation-first thinking"
+    lines: ["Automation-first", "thinking"]
   },
   {
     number: "03",
-    text: "Web products and interfaces"
+    lines: ["Web products", "and interfaces"]
   },
   {
     number: "04",
-    text: "Learning in public through GitHub"
-  }
-];
-
-const STACK_ROWS: StackToolRow[] = [
-  {
-    title: "AI TOOLS",
-    direction: "left",
-    items: [
-      { name: "Claude", href: "https://claude.ai", icon: { type: "react", Icon: SiClaude, colorClassName: "text-[#D97757]" } },
-      { name: "GPT-5.5", href: "https://openai.com", icon: { type: "image", src: "/icons/gpt-55.svg" } },
-      { name: "Cursor", href: "https://cursor.com", icon: { type: "image", src: "/icons/cursor.svg" } },
-      { name: "Codex", href: "https://openai.com/codex", icon: { type: "image", src: "/icons/codex.svg" } },
-      { name: "Midjourney", href: "https://www.midjourney.com", icon: { type: "image", src: "/icons/midjourney.svg" } }
-    ]
-  },
-  {
-    title: "WEB DEVELOPMENT",
-    direction: "right",
-    items: [
-      { name: "Next.js", href: "https://nextjs.org", icon: { type: "react", Icon: SiNextdotjs, colorClassName: "text-white" } },
-      { name: "React", href: "https://react.dev", icon: { type: "react", Icon: SiReact, colorClassName: "text-[#61DAFB]" } },
-      { name: "Three.js", href: "https://threejs.org", icon: { type: "react", Icon: SiThreedotjs, colorClassName: "text-white" } },
-      { name: "Framer Motion", href: "https://motion.dev", icon: { type: "react", Icon: SiFramer, colorClassName: "text-[#FF4DE1]" } },
-      { name: "Tailwind CSS", href: "https://tailwindcss.com", icon: { type: "react", Icon: SiTailwindcss, colorClassName: "text-[#38BDF8]" } },
-      { name: "HTML/CSS", href: "https://developer.mozilla.org/en-US/docs/Web", icon: { type: "react", Icon: SiHtml5, colorClassName: "text-[#E34F26]" } }
-    ]
-  },
-  {
-    title: "WORKFLOW & DEPLOYMENT",
-    direction: "left",
-    items: [
-      { name: "Linear", href: "https://linear.app", icon: { type: "react", Icon: SiLinear, colorClassName: "text-[#5E6AD2]" } },
-      { name: "GitHub", href: "https://github.com", icon: { type: "react", Icon: SiGithub, colorClassName: "text-white" } },
-      { name: "Vercel", href: "https://vercel.com", icon: { type: "react", Icon: SiVercel, colorClassName: "text-white" } },
-      { name: "VS Code", href: "https://code.visualstudio.com", icon: { type: "react", Icon: VscVscode, colorClassName: "text-[#007ACC]" } },
-      { name: "Figma", href: "https://figma.com", icon: { type: "react", Icon: SiFigma, colorClassName: "text-[#A259FF]" } }
-    ]
-  },
-  {
-    title: "CURRENTLY LEARNING",
-    direction: "right",
-    items: [
-      { name: "React Three Fiber", href: "https://r3f.docs.pmnd.rs", icon: { type: "image", src: "/icons/r3f.svg" } },
-      { name: "GSAP", href: "https://gsap.com", icon: { type: "react", Icon: SiGreensock, colorClassName: "text-[#88CE02]" } },
-      { name: "TypeScript", href: "https://www.typescriptlang.org", icon: { type: "react", Icon: SiTypescript, colorClassName: "text-[#3178C6]" } }
-    ]
-  }
-];
-
-const WORKFLOW_STEPS = [
-  "Understand the manual process",
-  "Map the repetitive steps",
-  "Connect tools, APIs, and logic",
-  "Build, test, and improve"
-];
-
-const SYSTEM_SECTIONS: SimpleStateSection[] = [
-  {
-    id: "problems",
-    label: "PROBLEMS",
-    heading: "Business systems break when work stays scattered.",
-    copy: "I look for repeated friction, unclear ownership, and manual handoffs before designing a cleaner operating flow.",
-    rows: ["Manual work without structure", "Tools that do not communicate", "Ideas that never become systems"]
-  },
-  {
-    id: "methods",
-    label: "METHODS",
-    heading: "A practical method for turning pressure into process.",
-    copy: "The method is simple: clarify the work, shape the system, build the interface, then improve what the data reveals.",
-    rows: ["Audit the workflow", "Architect the system", "Build and hand over"]
-  }
-];
-
-const LAB_SECTIONS: SimpleStateSection[] = [
-  {
-    id: "prototypes",
-    label: "PROTOTYPES",
-    heading: "Small builds that test useful ideas quickly.",
-    copy: "The lab is where I explore interface ideas, automation patterns, and AI-assisted product concepts before they become polished systems.",
-    rows: ["Interface experiments", "Automation prototypes", "AI-assisted product tests"]
-  },
-  {
-    id: "github",
-    label: "GITHUB",
-    heading: "Learning in public through shipped experiments.",
-    copy: "I use GitHub as a public trail of practice, iteration, and technical range.",
-    rows: ["github.com/shaheerhus85-dev", "Portfolio iterations", "Workflow experiments"],
-    href: "https://github.com/shaheerhus85-dev"
+    lines: ["Learning in public", "through GitHub"]
   }
 ];
 
@@ -189,17 +57,22 @@ const CONTACT_ITEMS = [
     )
   },
   {
-    label: "Phone",
-    value: "0349-3632575",
-    href: "tel:+923493632575",
+    label: "WhatsApp",
+    value: "Message on WhatsApp",
+    href: "https://wa.me/923390140860",
+    external: true,
     icon: (
       <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4">
         <path
-          d="M7.2 4.5 9.4 9l-1.55 1.2c.92 1.95 2.26 3.29 4.18 4.15l1.21-1.55 4.36 2.28-.45 3.07c-.1.64-.65 1.1-1.3 1.06C9.5 18.83 5.23 14.57 4.8 8.2c-.04-.65.43-1.22 1.07-1.31L7.2 4.5Z"
+          d="M5.15 18.85 6.1 15.4a7.2 7.2 0 1 1 2.65 2.54l-3.6.91Z"
           fill="none"
           stroke="currentColor"
           strokeLinejoin="round"
           strokeWidth="1.6"
+        />
+        <path
+          d="M9.3 8.55c.16-.36.34-.38.52-.38h.42c.13 0 .31.04.47.36.16.34.55 1.34.6 1.44.05.11.08.24 0 .39-.08.16-.13.24-.25.38-.12.14-.25.31-.36.42-.12.12-.25.25-.11.49.14.24.62 1.03 1.34 1.66.92.82 1.69 1.07 1.94 1.19.24.12.38.1.52-.06.16-.18.6-.7.76-.94.16-.24.32-.2.54-.12.23.08 1.43.67 1.68.79.24.12.41.18.47.28.06.1.06.59-.14 1.15-.2.56-1.16 1.07-1.62 1.11-.42.04-.96.06-1.55-.1-.36-.1-.82-.26-1.41-.52-2.48-1.08-4.1-3.57-4.22-3.74-.12-.16-1.01-1.34-1.01-2.56 0-1.22.64-1.82.87-2.06Z"
+          fill="currentColor"
         />
       </svg>
     )
@@ -216,52 +89,10 @@ const CONTACT_ITEMS = [
   }
 ];
 
-function ToolLogoItem({ tool }: { tool: StackTool }) {
-  let icon;
-
-  if (tool.icon.type === "react") {
-    const Icon = tool.icon.Icon;
-    icon = <Icon aria-hidden="true" className={`${styles.toolLogoSvg} ${tool.icon.colorClassName}`} />;
-  } else {
-    icon = <img aria-hidden="true" alt="" className={styles.toolLogoImage} src={tool.icon.src} />;
-  }
-
-  return (
-    <a
-      href={tool.href}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={`Open ${tool.name}`}
-      className={styles.toolWordmark}
-    >
-      <span className={styles.toolLogoMark}>{icon}</span>
-      <span className={styles.toolName}>{tool.name}</span>
-    </a>
-  );
-}
-
-function ToolRow({ row }: { row: StackToolRow }) {
-  const duplicatedItems = [...row.items, ...row.items];
-
-  return (
-    <div className={styles.stackRowWrap}>
-      <p className={styles.stackRowLabel}>{row.title}</p>
-      <div className={styles.marqueeRow} aria-label={row.title}>
-        <ul className={`${styles.marqueeTrack} ${row.direction === "right" ? styles.marqueeTrackReverse : ""}`}>
-          {duplicatedItems.map((tool, index) => (
-            <li key={`${row.title}-${tool.name}-${index}`} className={styles.marqueeItem}>
-              <ToolLogoItem tool={tool} />
-            </li>
-          ))}
-        </ul>
-      </div>
-    </div>
-  );
-}
-
 export default function HomePage() {
   const [activeStateKey, setActiveStateKey] = useState<HeroStateKey>("identity");
   const [pendingHash, setPendingHash] = useState<string | null>(null);
+  const lenis = useLenis();
 
   useEffect(() => {
     if (!pendingHash) {
@@ -269,61 +100,79 @@ export default function HomePage() {
     }
 
     const frame = window.requestAnimationFrame(() => {
-      document.querySelector(pendingHash)?.scrollIntoView({ behavior: "smooth", block: "start" });
+      const target = document.querySelector<HTMLElement>(pendingHash);
+
+      if (target) {
+        if (lenis) {
+          lenis.scrollTo(target, { duration: 1.05, offset: 0 });
+        } else {
+          target.scrollIntoView({ block: "start" });
+        }
+      }
+
       setPendingHash(null);
     });
 
     return () => window.cancelAnimationFrame(frame);
-  }, [activeStateKey, pendingHash]);
+  }, [activeStateKey, lenis, pendingHash]);
 
   const handleSectionNavigate = (stateKey: HeroStateKey, href: string) => {
     setActiveStateKey(stateKey);
     setPendingHash(href);
   };
 
-  const renderIdentitySections = () => (
+  const renderAboutSection = () => (
     <>
-      <section id="about" className="min-h-screen border-t border-[var(--border-subtle)] scroll-mt-6">
-        <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col justify-between px-5 py-12 sm:px-8 sm:py-16 lg:py-20">
-          <div className="grid flex-1 gap-12 lg:grid-cols-[minmax(0,0.62fr)_minmax(320px,0.38fr)] lg:items-center lg:gap-20">
+      <section id="about" className="flex h-screen min-h-[720px] items-center overflow-hidden border-t border-[var(--border-subtle)] bg-[#050505] scroll-mt-6 max-[900px]:h-auto max-[900px]:min-h-screen max-[900px]:overflow-visible max-[900px]:py-24 max-[600px]:py-20">
+        <div className="mx-auto flex w-[calc(100%_-_96px)] max-w-[1120px] flex-col max-[600px]:w-[calc(100%_-_32px)]">
+          <div className="grid grid-cols-[minmax(0,1.25fr)_minmax(300px,0.75fr)] items-center gap-[clamp(56px,8vw,120px)] max-[900px]:grid-cols-1 max-[900px]:gap-8">
             <div>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--text-secondary)]">ABOUT</p>
-              <h2 className="mt-8 max-w-[680px] text-[clamp(34px,4vw,64px)] font-black leading-[1.02] tracking-[-0.035em] text-[var(--text-primary)]">
+              <p data-reveal="text" className="mb-[clamp(24px,4vh,38px)] text-[10px] uppercase tracking-[0.24em] text-[rgba(236,232,227,0.55)]">ABOUT</p>
+              <h2 data-reveal="heading" data-reveal-delay="1" className="max-w-[680px] text-[clamp(48px,5vw,72px)] font-extrabold leading-[0.94] tracking-[-0.052em] text-[var(--text-primary)] max-[900px]:text-[clamp(44px,9vw,64px)] max-[600px]:text-[clamp(38px,12vw,52px)] max-[600px]:leading-[0.96] max-[600px]:tracking-[-0.045em]">
                 I&rsquo;m Shaheer Hussain Jafri —<br className="hidden sm:block" />
-                an AI-assisted developer building practical automation systems.
+                building AI-assisted systems<br className="hidden sm:block" />
+                for practical workflows.
               </h2>
             </div>
 
-            <div className="max-w-[420px] lg:justify-self-end lg:self-center">
-              <p className="text-[clamp(16px,1.15vw,18px)] font-medium leading-[1.65] text-[var(--text-secondary)] opacity-[0.72]">
-                I use AI tools, full-stack development, and workflow thinking to build websites, automations, and digital systems that reduce manual work and improve execution.
+            <div className="max-w-[420px] justify-self-end self-center max-[900px]:max-w-[560px] max-[900px]:justify-self-start">
+              <p data-reveal="text" data-reveal-delay="2" className="text-[clamp(15px,1.05vw,17px)] font-medium leading-[1.65] text-[rgba(236,232,227,0.62)]">
+                I use AI tools, full-stack development, and workflow thinking to turn repeated manual work into cleaner digital systems — from automation flows and internal tools to fast, modern web interfaces.
               </p>
             </div>
           </div>
 
-          <div className="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
+          <div data-reveal-group className="mt-[clamp(34px,5vh,56px)] grid grid-cols-4 gap-7 max-[900px]:mt-12 max-[900px]:grid-cols-2 max-[600px]:grid-cols-1 max-[600px]:gap-5">
             {ABOUT_PROOF_ITEMS.map((item) => (
-              <div key={item.number} className="border-t border-[var(--border-subtle)] pt-4">
-                <span className="block text-[10px] font-medium uppercase tracking-[0.18em] text-[var(--text-secondary)] opacity-60">
+              <div key={item.number} data-reveal-item className="border-t border-[rgba(255,255,255,0.12)] pt-3.5">
+                <span className="mb-3.5 block text-[10px] font-medium uppercase tracking-[0.18em] text-[rgba(236,232,227,0.38)]">
                   {item.number}
                 </span>
-                <span className="mt-3 block max-w-[18ch] text-[11px] font-medium uppercase leading-[1.45] tracking-[0.12em] text-[var(--text-secondary)] opacity-75 sm:text-[12px]">
-                  {item.text}
+                <span className="block text-[10px] font-medium uppercase leading-[1.55] tracking-[0.18em] text-[rgba(236,232,227,0.58)]">
+                  {item.lines.map((line) => (
+                    <span key={line} className="block">
+                      {line}
+                    </span>
+                  ))}
                 </span>
               </div>
             ))}
           </div>
         </div>
       </section>
+    </>
+  );
 
+  const renderContactSection = () => (
+    <>
       <section id="contact" className="min-h-screen border-t border-[var(--border-subtle)] scroll-mt-6">
         <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col justify-center px-5 py-14 sm:px-8 sm:py-18 lg:py-20">
-          <p className="text-[11px] uppercase tracking-[0.2em] text-[var(--text-secondary)]">CONTACT</p>
+          <p data-reveal="text" className="text-[11px] uppercase tracking-[0.2em] text-[var(--text-secondary)]">CONTACT</p>
           <div className="mt-8 grid gap-12 lg:grid-cols-[minmax(0,0.58fr)_minmax(360px,0.42fr)] lg:items-center lg:gap-20">
-            <h2 className="max-w-[720px] text-[clamp(42px,5.2vw,84px)] font-black leading-[1] tracking-[-0.04em] text-[var(--text-primary)]">
+            <h2 data-reveal="heading" data-reveal-delay="1" className="max-w-[720px] text-[clamp(42px,5.2vw,84px)] font-black leading-[1] tracking-[-0.04em] text-[var(--text-primary)]">
               Let&apos;s build systems that move faster.
             </h2>
-            <div className="grid gap-5">
+            <div data-reveal-group className="grid gap-5">
               {CONTACT_ITEMS.map((item) => {
                 const content = (
                   <>
@@ -341,7 +190,11 @@ export default function HomePage() {
 
                 if (!item.href) {
                   return (
-                    <div key={item.label} className="grid grid-cols-[18px_minmax(0,1fr)] gap-4 border-t border-[var(--border-subtle)] pt-5">
+                    <div
+                      key={item.label}
+                      data-reveal-item
+                      className="grid grid-cols-[18px_minmax(0,1fr)] gap-4 border-t border-[var(--border-subtle)] pt-5 last:border-b last:border-[var(--border-subtle)] last:pb-5"
+                    >
                       {content}
                     </div>
                   );
@@ -352,8 +205,10 @@ export default function HomePage() {
                     key={item.label}
                     href={item.href}
                     target={item.external ? "_blank" : undefined}
-                    rel={item.external ? "noreferrer" : undefined}
-                    className="grid grid-cols-[18px_minmax(0,1fr)] gap-4 border-t border-[var(--border-subtle)] pt-5 transition-opacity duration-300 hover:opacity-70"
+                    rel={item.external ? "noopener noreferrer" : undefined}
+                    aria-label={item.label === "WhatsApp" ? "Open WhatsApp chat" : `${item.label}: ${item.value}`}
+                    data-reveal-item
+                    className="grid cursor-pointer grid-cols-[18px_minmax(0,1fr)] gap-4 border-t border-[var(--border-subtle)] pt-5 transition-[border-color,opacity] duration-300 hover:border-[rgba(255,255,255,0.22)] hover:opacity-80 focus-visible:border-[rgba(255,255,255,0.24)] focus-visible:outline-none last:border-b last:border-[var(--border-subtle)] last:pb-5"
                   >
                     {content}
                   </a>
@@ -366,134 +221,37 @@ export default function HomePage() {
     </>
   );
 
-  const renderAiEngineeringSections = () => (
+  const renderActiveStateSections = () => (
     <>
-      <section id="stack" className={`${styles.stackSection} min-h-screen border-t border-[var(--border-subtle)] scroll-mt-6`}>
-        <div className="mx-auto flex min-h-screen w-full max-w-[1180px] flex-col justify-center px-5 py-[72px] sm:px-8 lg:px-12">
-          <div className={styles.stackHeader}>
-            <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--text-secondary)]">STACK</p>
-            <h2 className="mt-6 max-w-[760px] text-[clamp(44px,5vw,72px)] font-black leading-[1] tracking-[-0.04em] text-[var(--text-primary)]">
-              Stack &amp; Tools
-            </h2>
-            <p className="mt-6 max-w-[620px] text-[clamp(16px,1.15vw,18px)] font-medium leading-[1.55] text-[var(--text-secondary)] opacity-[0.7]">
-              A curated ecosystem of AI, design, development, and deployment tools I use to build practical digital systems.
-            </p>
-          </div>
+      {activeStateKey === "identity" && (
+        <>
+          {renderAboutSection()}
+          {renderContactSection()}
+        </>
+      )}
 
-          <div className={styles.stackToolsShell}>
-            <div className={styles.stackGlow} aria-hidden="true" />
-            <div className={styles.stackToolsGrid}>
-              {STACK_ROWS.map((row) => (
-                <ToolRow key={row.title} row={row} />
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {activeStateKey === "aiEngineering" && (
+        <>
+          <StackToolsSection />
+          <WorkflowsSection />
+        </>
+      )}
 
-      <section id="workflows" className="min-h-screen border-t border-[var(--border-subtle)] scroll-mt-6">
-        <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col justify-center px-5 py-12 sm:px-8 sm:py-16 lg:py-20">
-          <div className="grid gap-12 lg:grid-cols-[minmax(0,0.55fr)_minmax(360px,0.45fr)] lg:items-center lg:gap-20">
-            <div>
-              <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--text-secondary)]">WORKFLOWS</p>
-              <h2 className="mt-8 max-w-[680px] text-[clamp(34px,4vw,64px)] font-black leading-[1.02] tracking-[-0.035em] text-[var(--text-primary)]">
-                From manual work to structured automation.
-              </h2>
-              <p className="mt-8 max-w-[460px] text-[clamp(16px,1.15vw,18px)] font-medium leading-[1.65] text-[var(--text-secondary)] opacity-[0.72]">
-                I use AI-assisted planning, code, and automation tools to turn scattered business tasks into repeatable digital workflows.
-              </p>
-            </div>
+      {activeStateKey === "systems" && (
+        <>
+          <ProblemsSection />
+          <MethodsSection />
+        </>
+      )}
 
-            <div className="grid">
-              {WORKFLOW_STEPS.map((step, index) => (
-                <div key={step} className="grid grid-cols-[52px_minmax(0,1fr)] gap-5 border-t border-[var(--border-subtle)] py-5 last:border-b last:border-[var(--border-subtle)]">
-                  <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-[var(--text-secondary)] opacity-60">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <span className="text-[15px] font-medium leading-[1.45] text-[var(--text-primary)] opacity-85 sm:text-[16px]">
-                    {step}
-                  </span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+      {activeStateKey === "lab" && (
+        <>
+          <LabPrototypingSection />
+          <LabGithubSection />
+        </>
+      )}
     </>
   );
-
-  const renderSimpleStateSections = (sections: SimpleStateSection[]) => (
-    <>
-      {sections.map((section) => (
-        <section key={section.id} id={section.id} className="min-h-screen border-t border-[var(--border-subtle)] scroll-mt-6">
-          <div className="mx-auto flex min-h-screen w-full max-w-6xl flex-col justify-center px-5 py-12 sm:px-8 sm:py-16 lg:py-20">
-            <div className="grid gap-12 lg:grid-cols-[minmax(0,0.58fr)_minmax(320px,0.42fr)] lg:items-center lg:gap-20">
-              <div>
-                <p className="text-[11px] uppercase tracking-[0.22em] text-[var(--text-secondary)]">{section.label}</p>
-                <h2 className="mt-8 max-w-[680px] text-[clamp(34px,4vw,64px)] font-black leading-[1.02] tracking-[-0.035em] text-[var(--text-primary)]">
-                  {section.heading}
-                </h2>
-                <p className="mt-8 max-w-[460px] text-[clamp(16px,1.15vw,18px)] font-medium leading-[1.65] text-[var(--text-secondary)] opacity-[0.72]">
-                  {section.copy}
-                </p>
-              </div>
-
-              <div className="grid">
-                {section.rows.map((row, index) => {
-                  const rowContent = (
-                    <>
-                      <span className="text-[10px] font-medium uppercase tracking-[0.18em] text-[var(--text-secondary)] opacity-60">
-                        {String(index + 1).padStart(2, "0")}
-                      </span>
-                      <span className="text-[15px] font-medium leading-[1.45] text-[var(--text-primary)] opacity-85 sm:text-[16px]">
-                        {row}
-                      </span>
-                    </>
-                  );
-
-                  if (section.href && index === 0) {
-                    return (
-                      <a
-                        key={row}
-                        href={section.href}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="grid grid-cols-[52px_minmax(0,1fr)] gap-5 border-t border-[var(--border-subtle)] py-5 transition-opacity duration-300 hover:opacity-70 last:border-b last:border-[var(--border-subtle)]"
-                      >
-                        {rowContent}
-                      </a>
-                    );
-                  }
-
-                  return (
-                    <div key={row} className="grid grid-cols-[52px_minmax(0,1fr)] gap-5 border-t border-[var(--border-subtle)] py-5 last:border-b last:border-[var(--border-subtle)]">
-                      {rowContent}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </section>
-      ))}
-    </>
-  );
-
-  const renderActiveSections = () => {
-    if (activeStateKey === "aiEngineering") {
-      return renderAiEngineeringSections();
-    }
-
-    if (activeStateKey === "systems") {
-      return renderSimpleStateSections(SYSTEM_SECTIONS);
-    }
-
-    if (activeStateKey === "lab") {
-      return renderSimpleStateSections(LAB_SECTIONS);
-    }
-
-    return renderIdentitySections();
-  };
 
   return (
     <main className="min-h-screen w-full overflow-x-hidden bg-[var(--bg-primary)] text-[var(--text-primary)] [scrollbar-gutter:stable]">
@@ -503,15 +261,9 @@ export default function HomePage() {
         onSectionNavigate={handleSectionNavigate}
       />
 
-      {renderActiveSections()}
+      {renderActiveStateSections()}
 
-      <footer className="border-t border-[var(--border-subtle)] py-7 text-[11px] text-[var(--text-secondary)] sm:text-[12px]">
-        <div className="mx-auto flex w-full max-w-5xl flex-col gap-2 px-5 sm:flex-row sm:items-center sm:justify-between sm:px-8">
-          <span>© 2026 Shaheer Hussain Jafri</span>
-          <span>Designed &amp; built with AI</span>
-          <span>Karachi, Pakistan</span>
-        </div>
-      </footer>
+      <SiteFooter activeState={activeStateKey} onNavigate={handleSectionNavigate} />
     </main>
   );
 }

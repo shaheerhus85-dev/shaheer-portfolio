@@ -21,7 +21,7 @@ body {
 }
 
 html {
-  scroll-behavior: smooth;
+  scroll-behavior: auto;
 }
 
 body {
@@ -40,6 +40,20 @@ html.lenis body {
 
 .lenis.lenis-stopped {
   overflow: hidden;
+}
+
+[data-reveal],
+[data-reveal-item] {
+  will-change: opacity, transform;
+}
+
+html:not(.js-ready) [data-reveal],
+html:not(.js-ready) [data-reveal-item],
+[data-reveal].is-visible,
+[data-reveal-item].is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
 }
 
 a {
@@ -118,5 +132,51 @@ a {
   }
   to {
     transform: translate3d(0, 0, 0);
+  }
+}
+
+.stackMarqueeTrackGlobal {
+  display: flex;
+  width: max-content;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.stackMarqueeLeftGlobal {
+  animation: stackMarqueeLeftGlobal var(--stack-marquee-duration, 60s) linear infinite;
+}
+
+.stackMarqueeRightGlobal {
+  animation: stackMarqueeRightGlobal var(--stack-marquee-duration, 60s) linear infinite;
+}
+
+@keyframes stackMarqueeLeftGlobal {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes stackMarqueeRightGlobal {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal-item] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
   }
 }

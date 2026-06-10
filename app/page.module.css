@@ -108,27 +108,21 @@
   width: 100%;
   min-height: 64px;
   overflow: hidden;
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.28) 0%, #000 8%, #000 92%, rgba(0, 0, 0, 0.28) 100%);
+  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.28) 0%, #000 8%, #000 92%, rgba(0, 0, 0, 0.28) 100%);
 }
 
 .marqueeRow::before,
 .marqueeRow::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  z-index: 2;
-  width: min(120px, 18vw);
-  pointer-events: none;
+  display: none;
 }
 
 .marqueeRow::before {
   left: 0;
-  background: linear-gradient(to right, #050505 0%, rgba(5, 5, 5, 0.82) 38%, transparent 100%);
 }
 
 .marqueeRow::after {
   right: 0;
-  background: linear-gradient(to left, #050505 0%, rgba(5, 5, 5, 0.82) 38%, transparent 100%);
 }
 
 .marqueeTrack {
@@ -140,12 +134,16 @@
   margin: 0;
   padding: 0;
   list-style: none;
+  white-space: nowrap;
   will-change: transform;
+}
+
+.animate-marquee-left {
   animation: marquee-left 40s linear infinite;
 }
 
-.marqueeTrackReverse {
-  animation-name: marquee-right;
+.animate-marquee-right {
+  animation: marquee-right 40s linear infinite;
 }
 
 .marqueeItem {
@@ -230,7 +228,6 @@
   .marqueeTrack {
     min-height: 56px;
     gap: clamp(48px, 13vw, 60px);
-    animation-duration: 38s;
   }
 
   .marqueeRow {
@@ -254,5 +251,12 @@
 
   .toolName {
     font-size: clamp(16px, 4.8vw, 18px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-left,
+  .animate-marquee-right {
+    animation: none;
   }
 }

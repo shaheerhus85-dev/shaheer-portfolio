@@ -1,0 +1,204 @@
+.wrap {
+  flex: 0 0 200vw;
+  width: 200vw;
+  height: 100vh;
+  display: flex;
+}
+
+.tensionScene,
+.diagnosisScene {
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-base);
+}
+
+.inner {
+  height: 100%;
+  width: 100%;
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 84px 70px;
+}
+
+.tensionScene .inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.tensionTitle {
+  margin: 0;
+  max-width: 920px;
+  color: var(--text-primary);
+  line-height: 1.02;
+}
+
+.bleedWord {
+  color: #595f6d;
+}
+
+.rule {
+  width: 52px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.16);
+  margin: 22px 0 18px;
+}
+
+.tensionBody {
+  margin: 0;
+  max-width: 760px;
+  font-size: 16px;
+  line-height: 1.75;
+  letter-spacing: -0.015em;
+  color: #9098aa;
+}
+
+.diagnosisScene .inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.heading {
+  margin: 0;
+  max-width: 520px;
+  font-size: clamp(40px, 4.2vw, 58px);
+  line-height: 1.04;
+}
+
+.grid {
+  margin-top: 46px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.card {
+  min-height: 352px;
+  justify-content: space-between;
+}
+
+.cardStrong {
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+.cardRecessed {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.step {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #656b7d;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.step::after {
+  content: "";
+  flex: 1;
+  min-width: 96px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #e8edf8;
+  line-height: 1.2;
+  max-width: 24ch;
+}
+
+.cardBody {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.72;
+  letter-spacing: -0.01em;
+  color: #8b92a4;
+  max-width: 34ch;
+}
+
+@media (max-width: 1280px) {
+  .inner {
+    padding: 70px 48px;
+  }
+
+  .heading {
+    font-size: clamp(34px, 3.8vw, 52px);
+  }
+
+  .grid {
+    margin-top: 34px;
+    gap: 16px;
+  }
+
+  .card {
+    min-height: 318px;
+  }
+
+  .cardTitle {
+    font-size: 21px;
+  }
+
+  .cardBody {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 767px) {
+  .wrap {
+    flex-direction: column;
+    width: 100vw;
+    height: auto;
+  }
+
+  .tensionScene,
+  .diagnosisScene {
+    width: 100vw;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .inner {
+    padding: 66px 24px;
+  }
+
+  .tensionBody {
+    font-size: 16px;
+    line-height: 1.7;
+    max-width: 44ch;
+  }
+
+  .heading {
+    font-size: 36px;
+    max-width: 10ch;
+  }
+
+  .grid {
+    margin-top: 28px;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .card {
+    min-height: 282px;
+  }
+
+  .cardTitle {
+    font-size: 24px;
+  }
+
+  .cardBody {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+}
+

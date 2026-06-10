@@ -1,0 +1,32 @@
+﻿.wrap {
+  position: fixed;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 100;
+}
+
+.dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.15);
+  transition: width 0.3s ease;
+}
+
+.dotActive {
+  width: 24px;
+  height: 4px;
+  border-radius: 100px;
+  background: var(--text-primary);
+  transition: width 0.3s ease;
+}
+
+@media (max-width: 767px) {
+  .wrap {
+    display: none;
+  }
+}

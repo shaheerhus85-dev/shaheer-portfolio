@@ -1,0 +1,122 @@
+.section {
+  position: relative;
+  width: 500vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.pinnedShell {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  transform: translate3d(0, 0, 0);
+  will-change: transform;
+}
+
+.left {
+  width: 65%;
+  height: 100%;
+  background: #0c0c0e;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: clamp(40px, 6vw, 80px);
+  padding-right: 40px;
+}
+
+.leftInner {
+  max-width: none;
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(40px, 4.4vw, 60px);
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  color: #e8eaf2;
+  white-space: nowrap;
+}
+
+.line {
+  display: block;
+  margin-top: 40px;
+  width: 120px;
+  height: 1px;
+  background: rgba(245, 243, 238, 0.2);
+}
+
+.right {
+  width: 35%;
+  height: 100%;
+  position: relative;
+  background: #0c0c0e;
+  display: grid;
+  place-items: center;
+}
+
+.stack {
+  position: relative;
+  width: min(460px, 86%);
+  height: min(520px, 72vh);
+  perspective: 1800px;
+  transform-style: preserve-3d;
+}
+
+.card {
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  padding: 32px;
+  background:
+    linear-gradient(162deg, rgba(255, 255, 255, 0.5) 0%, rgba(245, 243, 238, 0.98) 42%, rgba(237, 234, 227, 1) 100%),
+    #f5f3ee;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 44px 72px rgba(0, 0, 0, 0.35),
+    0 18px 34px rgba(0, 0, 0, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  transform-origin: 50% 50%;
+  backface-visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 14% 10%, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0) 56%);
+}
+
+.card::after {
+  content: "";
+  position: absolute;
+  inset: auto 18px 12px;
+  height: 10px;
+  border-radius: 999px;
+  background: rgba(48, 44, 39, 0.18);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.cardTitle {
+  margin: 0 0 16px;
+  font-size: clamp(24px, 2.5vw, 28px);
+  font-weight: 700;
+  color: #1a1916;
+  line-height: 1.22;
+}
+
+.cardText {
+  margin: 0;
+  color: #5a5650;
+  font-size: 14px;
+  line-height: 1.78;
+  max-width: 95%;
+}

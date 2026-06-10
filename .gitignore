@@ -1,0 +1,42 @@
+# dependencies
+node_modules/
+
+# next.js
+.next/
+out/
+
+# production
+/build/
+/dist/
+
+# local env files
+.env
+.env*.local
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# vercel
+.vercel/
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# os/editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+.edge-profile/
+
+# local generated media/cache artifacts
+tmp_ref_frames/
+*.tmp
+hero-procedural-qa.png
+site-render-full.png
+portrait.png.png

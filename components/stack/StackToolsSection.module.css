@@ -1,0 +1,224 @@
+.stackSection {
+  min-height: 100vh;
+  padding: 112px 0 96px;
+  background: transparent;
+  color: #f4f4f4;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.stackGlow {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 62%;
+  width: 760px;
+  height: 420px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 50% 50%, rgba(35, 90, 80, 0.10), transparent 68%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.stackShell {
+  width: min(1240px, calc(100% - 128px));
+  margin: 0 auto;
+  padding: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.stackHeader {
+  max-width: 720px;
+  margin-bottom: 68px;
+}
+
+.stackEyebrow {
+  display: inline-block;
+  margin-bottom: 18px;
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 500;
+}
+
+.stackHeading {
+  margin: 0;
+  font-size: clamp(52px, 5.6vw, 78px);
+  line-height: 0.96;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  color: #f5f5f5;
+}
+
+.stackSubheading {
+  margin: 28px 0 0;
+  max-width: 690px;
+  font-size: clamp(18px, 1.8vw, 22px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.58);
+  font-weight: 400;
+}
+
+.stackMarqueeArea {
+  width: 100%;
+}
+
+.stackToolRow {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 24px 0 26px;
+}
+
+.stackToolRow.isLast {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stackToolLabel {
+  margin-bottom: 12px;
+  font-size: 10px;
+  line-height: 1;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.62);
+  font-weight: 500;
+}
+
+.stackMarqueeViewport {
+  width: 100%;
+  min-height: 56px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 7%, black 93%, transparent 100%);
+}
+
+.stackMarqueeTrack {
+  display: flex;
+  width: max-content;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.stackMarqueeViewport:hover .stackMarqueeTrack {
+  animation-play-state: paused;
+}
+
+.stackToolItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 13px;
+  flex: 0 0 auto;
+  margin-right: 88px;
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.88);
+  font-size: clamp(20px, 1.8vw, 23px);
+  line-height: 1;
+  font-weight: 650;
+  letter-spacing: -0.04em;
+}
+
+.stackToolIcon {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  display: block;
+}
+
+.stackToolName {
+  display: block;
+}
+
+@media (max-width: 900px) {
+  .stackSection {
+    padding: 96px 0;
+  }
+
+  .stackShell {
+    width: min(100% - 48px, 1120px);
+  }
+
+  .stackHeader {
+    margin-bottom: 52px;
+  }
+
+  .stackHeading {
+    font-size: clamp(48px, 13vw, 64px);
+  }
+
+  .stackSubheading {
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  .stackToolRow {
+    padding: 20px 0 22px;
+  }
+
+  .stackToolLabel {
+    margin-bottom: 12px;
+  }
+
+  .stackToolItem {
+    gap: 11px;
+    font-size: 19px;
+  }
+
+  .stackToolIcon {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (max-width: 560px) {
+  .stackSection {
+    min-height: 100vh;
+    align-items: center;
+    padding: 88px 0;
+  }
+
+  .stackShell {
+    width: min(100% - 28px, 1120px);
+  }
+
+  .stackHeader {
+    margin-bottom: 42px;
+  }
+
+  .stackEyebrow {
+    font-size: 10px;
+    margin-bottom: 16px;
+  }
+
+  .stackHeading {
+    font-size: clamp(44px, 15vw, 56px);
+    letter-spacing: -0.055em;
+  }
+
+  .stackSubheading {
+    margin-top: 22px;
+    font-size: 16px;
+    line-height: 1.55;
+  }
+
+  .stackToolRow {
+    padding: 18px 0 20px;
+  }
+
+  .stackToolItem {
+    font-size: 18px;
+  }
+
+  .stackToolIcon {
+    width: 26px;
+    height: 26px;
+  }
+}

@@ -1,7 +1,7 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import BackgroundMarquee from "./BackgroundMarquee";
-import HeroSignature3D from "./HeroSignature3D";
 import styles from "./Hero.module.css";
 
 export type HeroStateKey = "identity" | "aiEngineering" | "systems" | "lab";
@@ -25,6 +25,11 @@ type HeroProps = {
 };
 
 const MODEL_PATH = "/models/im-signature.glb";
+
+const HeroSignature3D = dynamic(() => import("./HeroSignature3D"), {
+  ssr: false,
+  loading: () => null,
+});
 
 const HERO_STATES: HeroState[] = [
   {
@@ -77,7 +82,7 @@ export default function Hero({ activeStateKey, onStateChange, onSectionNavigate 
       <BackgroundMarquee text={activeState.backgroundText} />
       <HeroSignature3D modelPath={activeState.modelPath} />
 
-      <header className="pointer-events-none absolute inset-x-0 top-0 z-20 min-h-[136px] border-b border-neutral-700/20 px-[clamp(24px,3.6vw,52px)] py-7">
+      <header className="pointer-events-none absolute inset-x-0 top-0 z-20 min-h-[136px] border-b border-[var(--line)] px-[clamp(24px,3.6vw,52px)] py-7">
         <div className="grid grid-cols-2 gap-x-8 gap-y-5 md:flex md:items-start md:justify-between">
           {HERO_STATES.map((state) => {
             const isActive = activeStateKey === state.key;
@@ -86,7 +91,7 @@ export default function Hero({ activeStateKey, onStateChange, onSectionNavigate 
               <div
                 key={state.key}
                 className={`pointer-events-auto flex min-w-0 flex-col items-start gap-y-1 text-left transition-opacity duration-300 hover:opacity-100 focus-within:opacity-100 md:basis-1/4 ${
-                  isActive ? "opacity-100" : "opacity-60"
+                  isActive ? "opacity-100" : "opacity-100"
                 }`}
                 onFocusCapture={() => onStateChange(state.key)}
                 onMouseEnter={() => onStateChange(state.key)}
@@ -94,7 +99,7 @@ export default function Hero({ activeStateKey, onStateChange, onSectionNavigate 
               >
                 <span
                   className={`font-['Inter_Tight',sans-serif] text-[0.8125rem] font-semibold uppercase leading-[1.1] tracking-[0.04em] transition-colors duration-300 ${
-                    isActive ? "text-[rgba(255,255,255,0.95)]" : "text-[rgba(255,255,255,0.55)]"
+                    isActive ? "text-[var(--text)]" : "text-[var(--text-soft)]"
                   }`}
                 >
                   {state.label}
@@ -113,8 +118,8 @@ export default function Hero({ activeStateKey, onStateChange, onSectionNavigate 
                       event.preventDefault();
                       onSectionNavigate(state.key, link.href);
                     }}
-                    className={`text-[0.6875rem] leading-[1.3] transition-colors duration-300 hover:text-[rgba(255,255,255,0.95)] focus-visible:text-[rgba(255,255,255,0.95)] ${
-                      isActive ? "text-[rgba(255,255,255,0.95)]" : "text-[rgba(255,255,255,0.55)]"
+                    className={`text-[0.6875rem] leading-[1.3] transition-colors duration-300 hover:text-[var(--text)] focus-visible:text-[var(--text)] ${
+                      isActive ? "text-[var(--text-soft)]" : "text-[var(--text-muted)]"
                     }`}
                   >
                     {link.label}
@@ -127,12 +132,12 @@ export default function Hero({ activeStateKey, onStateChange, onSectionNavigate 
       </header>
 
       <div className="pointer-events-none absolute inset-x-0 bottom-8 z-10 grid grid-cols-12 items-end gap-x-[clamp(24px,3vw,52px)] gap-y-6 px-[clamp(24px,3.6vw,52px)] max-md:bottom-6">
-        <div className="pointer-events-auto col-span-12 flex flex-wrap items-center justify-center gap-4 md:col-span-4 md:justify-start">
+        <div className={`pointer-events-auto col-span-12 md:col-span-4 ${styles.ctaGroup}`}>
           <a
             href="mailto:shaheerhus85@gmail.com"
-            className="inline-flex min-h-10 items-center justify-center rounded-full bg-[#f8f8f4] px-6 text-[11px] font-semibold uppercase tracking-[0.1em] !text-[#0a0a0a] opacity-100 shadow-[0_0_22px_rgba(255,255,255,0.14)] transition hover:scale-[1.03]"
+            className={styles.primaryCta}
           >
-            <span className="!text-[#0a0a0a] opacity-100">
+            <span className="!text-[#050505]">
               Build My System
             </span>
           </a>
@@ -140,27 +145,28 @@ export default function Hero({ activeStateKey, onStateChange, onSectionNavigate 
             href="https://github.com/shaheerhus85-dev"
             target="_blank"
             rel="noreferrer"
-            className="inline-flex min-h-10 items-center text-[11px] font-bold uppercase tracking-[0.12em] text-neutral-100 transition hover:text-white"
+            className={`group ${styles.secondaryCta}`}
           >
-            View GitHub -&gt;
+            View GitHub
+            <span className="inline-block transition-transform duration-300 group-hover:translate-x-[3px]">-&gt;</span>
           </a>
         </div>
 
-        <div className="col-span-12 flex flex-col items-center gap-4 md:col-span-4 md:col-start-9 md:flex-row md:items-end md:justify-end md:gap-10">
-          <div className="text-center md:text-left">
-            <p className="mb-[6px] text-[10px] font-medium uppercase tracking-[0.14em] text-neutral-600">
+        <div className={`col-span-12 md:col-span-4 md:col-start-9 ${styles.bottomInfo}`}>
+          <div className={styles.infoBlock}>
+            <p className={styles.infoLabel}>
               Availability
             </p>
-            <p className="flex items-center justify-center gap-2 text-[12px] font-medium tracking-wide text-neutral-200 md:justify-start">
+            <p className={styles.availabilityValue}>
               Available for work
-              <span className="inline-block size-1.5 rounded-full bg-[#39ff14] shadow-[0_0_10px_rgba(57,255,20,0.65)]" />
+              <span className={styles.availabilityDot} />
             </p>
           </div>
-          <div className="md:text-right">
-            <p className="mb-[6px] text-[10px] font-medium uppercase tracking-[0.14em] text-neutral-600">
+          <div className={`${styles.infoBlock} ${styles.locationBlock}`}>
+            <p className={styles.infoLabel}>
               Location
             </p>
-            <p className="text-[12px] font-medium tracking-wide text-neutral-200">Karachi, Pakistan</p>
+            <p className={styles.infoValue}>Karachi, Pakistan</p>
           </div>
         </div>
       </div>

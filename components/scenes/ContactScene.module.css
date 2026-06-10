@@ -1,0 +1,92 @@
+﻿.scene {
+  width: 100vw;
+  height: 100vh;
+  background: var(--bg-base);
+}
+
+.panel {
+  width: 100%;
+  height: 100%;
+  padding: var(--space-20);
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.heading {
+  margin: 0;
+  font-size: clamp(56px, 6vw, 80px);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.subtext {
+  margin: var(--space-4) 0 0;
+  max-width: 480px;
+  color: var(--text-secondary);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.actions {
+  margin-top: var(--space-10);
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.contactBlock {
+  margin-top: var(--space-12);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.divider {
+  width: 40px;
+  height: 1px;
+  background: var(--border-subtle);
+}
+
+.contactLine {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+}
+
+.copyright {
+  margin: var(--space-12) 0 0;
+  color: var(--text-ghost);
+  font-size: 11px;
+  font-weight: 400;
+}
+
+@media (max-width: 767px) {
+  .scene {
+    min-height: 100vh;
+    height: auto;
+  }
+
+  .panel {
+    padding: 60px 24px;
+  }
+
+  .actions {
+    margin-top: var(--space-8);
+    gap: var(--space-4);
+  }
+
+  .contactBlock {
+    margin-top: var(--space-10);
+  }
+}

@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Inter+Tight:wght@400;500;700;800;900&display=swap");
+
+:root {
+  --bg-primary: #221710;
+  --bg-secondary: #1B120D;
+  --bg-accent: #2B1D16;
+  --text-primary: #E8D8C9;
+  --text-secondary: #CBB7A3;
+
+  --font-display: "Cormorant Garamond", "Times New Roman", serif;
+  --font-body: "Inter Tight", system-ui, sans-serif;
+
+  --ease-butter: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-card: 0.65s;
+
+  --bg-base: var(--bg-primary);
+  --text-muted: #b99f89;
+  --text-ghost: #6a4d3f;
+  --border-subtle: rgba(232, 216, 201, 0.12);
+  --border-default: rgba(232, 216, 201, 0.18);
+  --border-strong: rgba(232, 216, 201, 0.24);
+  --border-focus: rgba(232, 216, 201, 0.3);
+
+  /* Backward-compatible aliases for existing components */
+  --color-bg: var(--bg-primary);
+  --color-surface: var(--text-primary);
+  --color-headline: var(--text-primary);
+  --color-body-dark: #21110b;
+  --color-body-muted: var(--text-secondary);
+  --color-label: #b89d87;
+  --color-border-soft: rgba(232, 216, 201, 0.22);
+  --color-eyebrow: #d2beab;
+  --color-dot-active: var(--text-primary);
+  --color-dot-inactive: #5a3a2d;
+
+  --color-base: var(--bg-primary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-ghost: var(--text-ghost);
+}
+
+* {
+  box-sizing: border-box;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  overflow: hidden;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+a {
+  color: inherit;
+}
+
+.text-display,
+.text-headline,
+.text-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 600;
+}
+
+.text-display {
+  font-size: clamp(48px, 6vw, 80px);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.text-headline {
+  font-size: clamp(36px, 4vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
+.text-title {
+  font-size: clamp(18px, 2vw, 22px);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.text-body {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.7;
+  letter-spacing: -0.01em;
+}
+
+.text-label {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.text-caption {
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+}
+
+

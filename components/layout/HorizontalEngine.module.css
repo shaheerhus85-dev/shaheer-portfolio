@@ -1,0 +1,28 @@
+.spacer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.viewport {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: transparent;
+}
+
+.track {
+  display: flex;
+  flex-direction: row;
+  width: max-content;
+  height: 100vh;
+  transform: translateX(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  transform-style: flat;
+}
