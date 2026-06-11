@@ -61,7 +61,7 @@ const CONTACT_ITEMS = [
   {
     label: "WhatsApp",
     value: "Message on WhatsApp",
-    href: "https://wa.me/923390140860",
+    href: "https://wa.me/92339140860",
     external: true,
     icon: (
       <svg aria-hidden="true" viewBox="0 0 24 24" className="h-4 w-4">

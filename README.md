@@ -1,36 +1,32 @@
 # Shaheer Hussain Jafri - AI Systems Portfolio
 
-A premium cinematic portfolio website built to present my work, thinking, and direction as an AI-assisted developer and automation-focused systems builder.
+A premium cinematic portfolio built to present my direction as an AI-assisted developer and automation-focused systems builder.
 
 ## Overview
 
-This is not a normal project-grid portfolio. It is a storytelling-based portfolio focused on AI systems, automation thinking, workflow design, and modern web interfaces.
+This portfolio is designed as a storytelling experience rather than a traditional project grid. It focuses on how I think about systems, automation, workflow design, and practical digital products.
 
-The site is designed to communicate how I think about digital systems: identifying repeated manual work, shaping cleaner workflows, and building practical web experiences around those systems.
+The goal is to show how repeated manual work can be translated into cleaner digital workflows, modern interfaces, and reliable web-based systems.
 
 ## Positioning
 
-Shaheer Hussain Jafri is building as an AI-assisted developer and automation-focused systems builder, using modern web tools, AI workflows, full-stack thinking, and practical automation logic to build digital systems that reduce manual work.
+I am building as an AI-assisted developer focused on:
 
-The portfolio highlights:
-
-- AI-assisted development
-- Workflow automation
-- Full-stack web products
+- AI-assisted development workflows
+- Automation-first thinking
+- Full-stack web interfaces
 - Practical business systems
+- Workflow optimization
 - Learning in public through GitHub
 
-## Website Architecture
+## Website Structure
 
-The website uses a state-based hero navigation system instead of a traditional linear portfolio structure.
+The portfolio uses state-based navigation inside the hero:
 
-- Identity state: About and Contact
-- AI Engineering state: Stack and Workflows
-- Systems state: Problems and Methods
-- Lab state: Prototypes and GitHub
-- Contact and footer for direct communication and supporting links
-
-The visual direction is cinematic, dark, matte, and minimal, with a premium chrome 3D signature object in the hero.
+- Identity - About and Contact
+- AI Engineering - Stack and Workflows
+- Systems - Problems and Methods
+- Lab - Prototypes and GitHub
 
 ## Tech Stack
 
@@ -38,29 +34,25 @@ The visual direction is cinematic, dark, matte, and minimal, with a premium chro
 - React
 - TypeScript
 - Tailwind CSS
-- GSAP
-- Lenis
 - Three.js
 - React Three Fiber
 - Drei
+- GSAP
+- Lenis
 - Vercel
 - GitHub
-- AI tools used throughout the planning and development workflow
 
-## Features
+## Key Features
 
-- Premium hero section
-- Chrome 3D signature object
+- Cinematic dark matte interface
+- Chrome 3D hero signature
 - Animated background marquee
-- State-based section switching
-- Stack & Tools section
-- Workflow and process storytelling
-- System, problem, and method sections
-- Lab and GitHub exploration sections
-- Contact section
+- State-based portfolio navigation
+- Stack and tools showcase
+- Workflow and systems storytelling
 - Interactive particle footer
-- Responsive design
-- Performance-focused loading
+- Responsive layout
+- Performance-focused build
 
 ## Local Development
 
@@ -70,7 +62,7 @@ Install dependencies:
 npm install
 ```
 
-Run the development server:
+Run locally:
 
 ```bash
 npm run dev
@@ -82,7 +74,7 @@ Build for production:
 npm run build
 ```
 
-Start the production server:
+Start production build:
 
 ```bash
 npm run start
@@ -90,26 +82,18 @@ npm run start
 
 ## Deployment
 
-This portfolio is optimized for Vercel deployment.
-
-Recommended deployment flow:
-
-1. Push the repository to GitHub.
-2. Import the GitHub repository into Vercel.
-3. Use the default Next.js build settings.
-4. Add any required environment variables in Vercel project settings.
-5. Deploy.
+This project is optimized for deployment on Vercel using the default Next.js build settings.
 
 ## Contact
 
 Email: [shaheerhus85@gmail.com](mailto:shaheerhus85@gmail.com)
 
-GitHub: https://github.com/shaheerhus85-dev
+GitHub: [github.com/shaheerhus85-dev](https://github.com/shaheerhus85-dev)
 
-WhatsApp: https://wa.me/92339140860
+WhatsApp: [Message on WhatsApp](https://wa.me/92339140860)
 
 Location: Karachi, Pakistan
 
 ## Status
 
-Portfolio is actively evolving as Shaheer continues building AI-assisted systems, automation workflows, and practical digital products.
+This portfolio is actively evolving as I continue building AI-assisted systems, automation workflows, and practical digital products.

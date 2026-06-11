@@ -44,7 +44,7 @@ const CONTACT_ROWS = [
   {
     label: "WhatsApp",
     value: "WhatsApp",
-    href: "https://wa.me/923390140860",
+    href: "https://wa.me/92339140860",
     external: true,
     ariaLabel: "Open WhatsApp chat",
     particleText: "WHATSAPP",
