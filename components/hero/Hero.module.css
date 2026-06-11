@@ -1,0 +1,170 @@
+.heroSection {
+  position: relative;
+  isolation: isolate;
+  width: 100%;
+  min-width: 100vw;
+  height: 100dvh;
+  min-height: 100vh;
+  overflow: hidden;
+  background: #000000;
+}
+
+.hero3dLayer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.heroCanvas {
+  width: 100%;
+  height: 100%;
+}
+
+.heroCanvas canvas {
+  display: block;
+}
+
+.availabilityDot {
+  display: inline-block;
+  flex: 0 0 auto;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: #00ff66;
+  box-shadow: 0 0 8px rgba(0, 255, 102, 0.55);
+  animation: availabilityBlink 2.4s ease-in-out infinite;
+}
+
+.ctaGroup {
+  position: relative;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.primaryCta,
+.secondaryCta {
+  display: inline-flex;
+  height: 52px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 0 28px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  text-transform: uppercase;
+  transition:
+    transform 240ms ease,
+    background-color 240ms ease,
+    border-color 240ms ease,
+    box-shadow 240ms ease,
+    color 240ms ease;
+}
+
+.primaryCta {
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: #ece8e3;
+  color: #050505;
+  box-shadow: 0 12px 34px rgba(255, 255, 255, 0.10);
+}
+
+.primaryCta:hover,
+.primaryCta:focus-visible {
+  transform: translateY(-2px);
+  background: #f7f4ee;
+  box-shadow: 0 16px 42px rgba(255, 255, 255, 0.14);
+}
+
+.secondaryCta {
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: transparent;
+  color: #ece8e3;
+}
+
+.secondaryCta:hover,
+.secondaryCta:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.045);
+  color: #ece8e3;
+}
+
+.bottomInfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.infoBlock {
+  text-align: center;
+}
+
+.infoLabel {
+  margin-bottom: 6px;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.3;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(236, 232, 227, 0.42);
+}
+
+.availabilityValue,
+.infoValue {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: rgba(236, 232, 227, 0.86);
+}
+
+.availabilityValue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+@keyframes availabilityBlink {
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 768px) {
+  .ctaGroup {
+    justify-content: flex-start;
+  }
+
+  .bottomInfo {
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: flex-end;
+    gap: 40px;
+  }
+
+  .infoBlock {
+    text-align: left;
+  }
+
+  .locationBlock {
+    text-align: right;
+  }
+
+  .availabilityValue {
+    justify-content: flex-start;
+  }
+}

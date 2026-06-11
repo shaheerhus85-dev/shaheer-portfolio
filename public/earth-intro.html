@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Karachi Earth Intro</title>
+  <style>
+    :root {
+      --bg: #000008;
+      --amber: #ff8c42;
+      --amber-soft: rgba(255, 107, 53, 0.67);
+      --text-soft: rgba(255, 255, 255, 0.35);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      overflow: hidden;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    }
+
+    #intro-container {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    #globe-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    #karachi-label {
+      position: absolute;
+      left: 0;
+      top: 0;
+      transform: translate(-50%, -100%);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.9s ease;
+      text-align: center;
+      text-shadow: 0 0 14px rgba(255, 140, 66, 0.35);
+      white-space: nowrap;
+    }
+
+    #karachi-label .city {
+      display: block;
+      font-size: clamp(1.1rem, 2.2vw, 2rem);
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--amber);
+      font-weight: 600;
+    }
+
+    #karachi-label .country {
+      display: block;
+      margin-top: 0.2rem;
+      font-size: clamp(0.65rem, 1vw, 0.9rem);
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--amber-soft);
+    }
+
+    #skip-btn {
+      position: absolute;
+      right: 24px;
+      bottom: 24px;
+      color: var(--text-soft);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.25s ease;
+      z-index: 20;
+    }
+
+    #skip-btn:hover {
+      color: var(--amber);
+    }
+
+    #loading-bar {
+      position: absolute;
+      left: 50%;
+      bottom: 34px;
+      transform: translateX(-50%);
+      width: min(320px, 70vw);
+      height: 3px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      overflow: hidden;
+      z-index: 21;
+      transition: opacity 0.4s ease;
+    }
+
+    #loading-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #ff6b35, #ffb16a);
+      transition: width 0.25s ease;
+    }
+
+    #fade-overlay {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+      z-index: 25;
+    }
+
+    #portfolio-content {
+      position: fixed;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 1;
+      background: radial-gradient(circle at 20% 10%, #171722, #0b0b10 65%);
+      color: #f5f3ee;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      transition: opacity 0.9s ease;
+      padding: 24px;
+    }
+
+    #portfolio-content.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #portfolio-content h1 {
+      margin: 0;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: clamp(1.6rem, 3.8vw, 3rem);
+    }
+
+    #portfolio-content p {
+      margin-top: 12px;
+      color: rgba(245, 243, 238, 0.7);
+      letter-spacing: 0.06em;
+      font-size: clamp(0.85rem, 1.5vw, 1rem);
+    }
+  </style>
+</head>
+<body>
+  <div id="intro-container">
+    <canvas id="globe-canvas"></canvas>
+
+    <div id="karachi-label">
+      <span class="city">Karachi</span>
+      <span class="country">Pakistan</span>
+    </div>
+
+    <div id="skip-btn">Skip Intro</div>
+
+    <div id="loading-bar">
+      <div id="loading-fill"></div>
+    </div>
+
+    <div id="fade-overlay"></div>
+  </div>
+
+  <div id="portfolio-content">
+    <div>
+      <h1>Portfolio Content</h1>
+      <p>Intro complete. Replace this block with your actual homepage.</p>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // ------------------------------
+    // Easing utilities
+    // ------------------------------
+    function easeOutCubic(t) {
+      return 1 - Math.pow(1 - t, 3);
+    }
+
+    function easeInOutExpo(t) {
+      if (t === 0) return 0;
+      if (t === 1) return 1;
+      if (t < 0.5) return Math.pow(2, 20 * t - 10) / 2;
+      return (2 - Math.pow(2, -20 * t + 10)) / 2;
+    }
+
+    function easeOutQuart(t) {
+      return 1 - Math.pow(1 - t, 4);
+    }
+
+    function customEarth(t) {
+      if (t < 0.22) return easeOutCubic(t / 0.22) * 0.35;
+      if (t < 0.66) return 0.35 + ((t - 0.22) / 0.44) * 0.4;
+      return 0.75 + easeOutQuart((t - 0.66) / 0.34) * 0.25;
+    }
+
+    function latLonToVector3(lat, lon, radius) {
+      var r = radius || 1.0;
+      var phi = (90 - lat) * (Math.PI / 180);
+      var theta = (lon + 180) * (Math.PI / 180);
+      return new THREE.Vector3(
+        -r * Math.sin(phi) * Math.cos(theta),
+         r * Math.cos(phi),
+         r * Math.sin(phi) * Math.sin(theta)
+      );
+    }
+
+    // ------------------------------
+    // DOM refs
+    // ------------------------------
+    var introContainer = document.getElementById('intro-container');
+    var portfolioContent = document.getElementById('portfolio-content');
+    var karachiLabel = document.getElementById('karachi-label');
+    var skipBtn = document.getElementById('skip-btn');
+    var loadingBar = document.getElementById('loading-bar');
+    var loadingFill = document.getElementById('loading-fill');
+    var fadeOverlay = document.getElementById('fade-overlay');
+    var canvas = document.getElementById('globe-canvas');
+
+    // ------------------------------
+    // Renderer / Scene / Camera
+    // ------------------------------
+    var renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      antialias: true,
+      alpha: false,
+      powerPreference: 'high-performance'
+    });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.outputEncoding = THREE.sRGBEncoding;
+
+    var scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x000008);
+
+    var camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.001, 100);
+    camera.position.set(0, 0, 3.5);
+
+    // ------------------------------
+    // Lighting
+    // ------------------------------
+    var sunLight = new THREE.DirectionalLight(0xfff5e0, 1.4);
+    sunLight.position.set(5, 3, 5);
+    scene.add(sunLight);
+
+    var ambient = new THREE.AmbientLight(0x0a0a1a, 0.08);
+    scene.add(ambient);
+
+    // ------------------------------
+    // Groups
+    // ------------------------------
+    var earthGroup = new THREE.Group();
+    scene.add(earthGroup);
+
+    // ------------------------------
+    // Texture loading
+    // ------------------------------
+    var loadingManager = new THREE.LoadingManager();
+    var textureLoader = new THREE.TextureLoader(loadingManager);
+
+    var textures = {};
+    var assetsReady = false;
+    var introStarted = false;
+
+    loadingManager.onProgress = function(url, loaded, total) {
+      var pct = total ? Math.round((loaded / total) * 100) : 0;
+      loadingFill.style.width = pct + '%';
+    };
+
+    loadingManager.onLoad = function() {
+      assetsReady = true;
+      loadingBar.style.opacity = '0';
+      setTimeout(function() {
+        loadingBar.style.display = 'none';
+      }, 450);
+
+      prepareTextures();
+      buildEarthSystem();
+      buildStars();
+
+      clock.start();
+      introStarted = true;
+    };
+
+    loadingManager.onError = function(url) {
+      console.warn('Failed to load texture:', url);
+    };
+
+    textures.day = textureLoader.load('https://raw.githubusercontent.com/turban/webgl-earth/master/images/2_no_clouds_4k.jpg');
+    textures.night = textureLoader.load('https://raw.githubusercontent.com/turban/webgl-earth/master/images/5_night_4k.jpg');
+    textures.cloud = textureLoader.load('https://raw.githubusercontent.com/turban/webgl-earth/master/images/fair_clouds_4k.jpg');
+    textures.normal = textureLoader.load('https://raw.githubusercontent.com/turban/webgl-earth/master/images/elev_bump_4k.jpg');
+
+    function prepareTextures() {
+      Object.keys(textures).forEach(function(key) {
+        textures[key].wrapS = THREE.ClampToEdgeWrapping;
+        textures[key].wrapT = THREE.ClampToEdgeWrapping;
+        textures[key].anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+        textures[key].encoding = key === 'night' ? THREE.LinearEncoding : THREE.sRGBEncoding;
+      });
+    }
+
+    // ------------------------------
+    // Earth, Clouds, Atmosphere
+    // ------------------------------
+    var earth = null;
+    var clouds = null;
+    var atmosphere = null;
+    var outerRing = null;
+    var markerGroup = null;
+    var pulseRing = null;
+    var markerDot = null;
+    var starPoints = null;
+    var starMaterial = null;
+
+    var KARACHI = latLonToVector3(24.8607, 67.0011, 1.0);
+
+    function buildEarthSystem() {
+      var earthGeo = new THREE.SphereGeometry(1.0, 64, 64);
+      var earthMat = new THREE.MeshPhongMaterial({
+        map: textures.day,
+        emissive: new THREE.Color(0xffa15a),
+        emissiveMap: textures.night,
+        emissiveIntensity: 1.0,
+        normalMap: textures.normal,
+        normalScale: new THREE.Vector2(0.05, 0.05),
+        specular: new THREE.Color(0x1a1a2e),
+        shininess: 8
+      });
+
+      earth = new THREE.Mesh(earthGeo, earthMat);
+      earthGroup.add(earth);
+
+      var cloudGeo = new THREE.SphereGeometry(1.005, 64, 64);
+      var cloudMat = new THREE.MeshPhongMaterial({
+        map: textures.cloud,
+        transparent: true,
+        opacity: 0.35,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+      clouds = new THREE.Mesh(cloudGeo, cloudMat);
+      earthGroup.add(clouds);
+
+      var atmoGeo = new THREE.SphereGeometry(1.02, 64, 64);
+      var atmoMat = new THREE.ShaderMaterial({
+        vertexShader: [
+          'varying vec3 vNormal;',
+          'void main() {',
+          '  vNormal = normalize(normalMatrix * normal);',
+          '  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);',
+          '}'
+        ].join('\n'),
+        fragmentShader: [
+          'varying vec3 vNormal;',
+          'void main() {',
+          '  float intensity = pow(0.7 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 3.0);',
+          '  gl_FragColor = vec4(0.2, 0.5, 1.0, 1.0) * intensity;',
+          '}'
+        ].join('\n'),
+        side: THREE.BackSide,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+      atmosphere = new THREE.Mesh(atmoGeo, atmoMat);
+      earthGroup.add(atmosphere);
+
+      var ringGeo = new THREE.SphereGeometry(1.15, 64, 64);
+      var ringMat = new THREE.ShaderMaterial({
+        uniforms: {
+          uColor: { value: new THREE.Color(0.1, 0.3, 0.8) }
+        },
+        vertexShader: [
+          'varying vec3 vNormal;',
+          'void main() {',
+          '  vNormal = normalize(normalMatrix * normal);',
+          '  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);',
+          '}'
+        ].join('\n'),
+        fragmentShader: [
+          'uniform vec3 uColor;',
+          'varying vec3 vNormal;',
+          'void main() {',
+          '  float intensity = pow(0.35 - dot(vNormal, vec3(0.0, 0.0, 1.0)), 2.2);',
+          '  gl_FragColor = vec4(uColor, 1.0) * max(intensity, 0.0) * 0.35;',
+          '}'
+        ].join('\n'),
+        side: THREE.BackSide,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+      outerRing = new THREE.Mesh(ringGeo, ringMat);
+      earthGroup.add(outerRing);
+
+      buildKarachiMarker();
+    }
+
+    function buildKarachiMarker() {
+      markerGroup = new THREE.Group();
+      markerGroup.visible = false;
+
+      var normal = KARACHI.clone().normalize();
+      var markerPos = normal.clone().multiplyScalar(1.003);
+
+      var ringGeo = new THREE.RingGeometry(0.009, 0.014, 48);
+      var ringMat = new THREE.MeshBasicMaterial({
+        color: 0xff6b35,
+        transparent: true,
+        opacity: 0.95,
+        side: THREE.DoubleSide,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false
+      });
+      pulseRing = new THREE.Mesh(ringGeo, ringMat);
+      pulseRing.position.copy(markerPos);
+      pulseRing.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), normal);
+
+      var dotGeo = new THREE.SphereGeometry(0.003, 16, 16);
+      var dotMat = new THREE.MeshPhongMaterial({
+        color: 0xff8c42,
+        emissive: 0xff8c42,
+        emissiveIntensity: 1.8,
+        shininess: 24
+      });
+      markerDot = new THREE.Mesh(dotGeo, dotMat);
+      markerDot.position.copy(normal.clone().multiplyScalar(1.002));
+
+      markerGroup.add(pulseRing);
+      markerGroup.add(markerDot);
+      earthGroup.add(markerGroup);
+    }
+
+    // ------------------------------
+    // Starfield (8000 points with twinkle phase)
+    // ------------------------------
+    function buildStars() {
+      var starCount = 8000;
+      var positions = new Float32Array(starCount * 3);
+      var phases = new Float32Array(starCount);
+
+      for (var i = 0; i < starCount; i++) {
+        var radius = 35 + Math.random() * 65;
+        var theta = Math.random() * Math.PI * 2;
+        var phi = Math.acos(2 * Math.random() - 1);
+
+        positions[i * 3 + 0] = radius * Math.sin(phi) * Math.cos(theta);
+        positions[i * 3 + 1] = radius * Math.cos(phi);
+        positions[i * 3 + 2] = radius * Math.sin(phi) * Math.sin(theta);
+
+        phases[i] = Math.random() * Math.PI * 2;
+      }
+
+      var starGeo = new THREE.BufferGeometry();
+      starGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+      starGeo.setAttribute('phase', new THREE.BufferAttribute(phases, 1));
+
+      starMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+          uTime: { value: 0.0 }
+        },
+        vertexShader: [
+          'attribute float phase;',
+          'varying float vPhase;',
+          'void main(){',
+          '  vPhase = phase;',
+          '  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);',
+          '  gl_PointSize = 1.7;',
+          '  gl_Position = projectionMatrix * mvPosition;',
+          '}'
+        ].join('\n'),
+        fragmentShader: [
+          'uniform float uTime;',
+          'varying float vPhase;',
+          'void main(){',
+          '  float d = length(gl_PointCoord - vec2(0.5));',
+          '  if(d > 0.5) discard;',
+          '  float twinkle = 0.55 + 0.45 * sin(uTime + vPhase);',
+          '  gl_FragColor = vec4(vec3(1.0), twinkle * 0.9);',
+          '}'
+        ].join('\n'),
+        transparent: true,
+        depthWrite: false,
+        blending: THREE.AdditiveBlending
+      });
+
+      starPoints = new THREE.Points(starGeo, starMaterial);
+      scene.add(starPoints);
+    }
+
+    // ------------------------------
+    // Camera animation
+    // ------------------------------
+    function animateCamera(elapsed) {
+      var duration = 9.1;
+      var rawT = Math.min(elapsed / duration, 1.0);
+      var t = customEarth(rawT);
+
+      var startRadius = 3.5;
+      var endRadius = 1.04;
+      var radius = THREE.MathUtils.lerp(startRadius, endRadius, t);
+
+      var startDir = new THREE.Vector3(0.3, 0.4, 1).normalize();
+      var endDir = KARACHI.clone().normalize();
+      var currentDir = startDir.clone().lerp(endDir, t).normalize();
+
+      var arcOffset = Math.sin(t * Math.PI) * 0.3;
+      currentDir.x += arcOffset * 0.15;
+      currentDir.normalize();
+
+      camera.position.copy(currentDir.multiplyScalar(radius));
+      camera.lookAt(new THREE.Vector3(0, 0, 0));
+
+      var roll = Math.sin(t * Math.PI) * 0.08;
+      camera.rotateZ(roll * (1 - t));
+
+      if (earth && earth.material) {
+        var lightBoost = THREE.MathUtils.lerp(1.0, 1.8, easeInOutExpo(Math.min(rawT, 1.0)));
+        earth.material.emissiveIntensity = lightBoost;
+      }
+    }
+
+    // ------------------------------
+    // Label projection + pulse
+    // ------------------------------
+    var markerWorld = new THREE.Vector3();
+
+    function updateLabelPosition() {
+      if (!markerDot || !markerGroup.visible) return;
+
+      markerDot.getWorldPosition(markerWorld);
+      markerWorld.project(camera);
+
+      var x = (markerWorld.x * 0.5 + 0.5) * window.innerWidth;
+      var y = (-markerWorld.y * 0.5 + 0.5) * window.innerHeight;
+
+      karachiLabel.style.left = x + 'px';
+      karachiLabel.style.top = (y - 14) + 'px';
+
+      var inView = markerWorld.z < 1;
+      if (!inView) {
+        karachiLabel.style.opacity = '0';
+      }
+    }
+
+    function updatePulseRing(elapsed) {
+      if (!pulseRing || !markerGroup.visible) return;
+      var phase = (elapsed % 1.5) / 1.5;
+      var ringScale = THREE.MathUtils.lerp(0.8, 1.4, easeOutCubic(phase));
+      pulseRing.scale.setScalar(ringScale);
+      pulseRing.material.opacity = THREE.MathUtils.lerp(1.0, 0.0, phase);
+    }
+
+    // ------------------------------
+    // Intro lifecycle
+    // ------------------------------
+    var clock = new THREE.Clock(false);
+    var animationDone = false;
+    var landingHandled = false;
+    var introRemoved = false;
+
+    function onLandingComplete() {
+      if (landingHandled) return;
+      landingHandled = true;
+
+      markerGroup.visible = true;
+
+      setTimeout(function() {
+        karachiLabel.style.opacity = '1';
+      }, 500);
+
+      setTimeout(function() {
+        transitionToPortfolio();
+      }, 2500);
+    }
+
+    function transitionToPortfolio() {
+      if (introRemoved) return;
+      introRemoved = true;
+
+      fadeOverlay.style.opacity = '1';
+      setTimeout(function() {
+        portfolioContent.classList.add('visible');
+        introContainer.style.transition = 'opacity 0.9s ease';
+        introContainer.style.opacity = '0';
+      }, 820);
+
+      setTimeout(function() {
+        if (introContainer && introContainer.parentNode) {
+          introContainer.parentNode.removeChild(introContainer);
+        }
+      }, 1850);
+    }
+
+    function skipIntro() {
+      if (!assetsReady || introRemoved) return;
+      animationDone = true;
+      if (earth) {
+        // Move instantly to final Karachi framing
+        var endDir = KARACHI.clone().normalize();
+        camera.position.copy(endDir.clone().multiplyScalar(1.04));
+        camera.lookAt(0, 0, 0);
+      }
+      onLandingComplete();
+    }
+
+    skipBtn.addEventListener('click', skipIntro);
+
+    // ------------------------------
+    // Main render loop
+    // ------------------------------
+    function render() {
+      requestAnimationFrame(render);
+
+      if (!assetsReady) return;
+
+      var elapsed = clock.getElapsedTime();
+
+      if (clouds) {
+        clouds.rotation.y += 0.00005;
+      }
+
+      if (starMaterial) {
+        starMaterial.uniforms.uTime.value = elapsed;
+      }
+
+      if (!animationDone) {
+        animateCamera(elapsed);
+        if (elapsed >= 9.1) {
+          animationDone = true;
+          onLandingComplete();
+        }
+      } else {
+        if (earth) {
+          earth.rotation.y += 0.0003;
+          if (clouds) {
+            clouds.rotation.y += 0.00025;
+          }
+        }
+        updateLabelPosition();
+        updatePulseRing(elapsed);
+      }
+
+      renderer.render(scene, camera);
+    }
+
+    render();
+
+    // ------------------------------
+    // Responsive resize
+    // ------------------------------
+    window.addEventListener('resize', function() {
+      var w = window.innerWidth;
+      var h = window.innerHeight;
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      renderer.setSize(w, h);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      if (animationDone) {
+        updateLabelPosition();
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+:root {
+  /* Canonical reference palette (cool dark premium) */
+  --bg: #050505;
+  --bg-alt: #070707;
+  --text: #ece8e3;
+  --text-soft: rgba(236, 232, 227, 0.66);
+  --text-muted-ref: rgba(236, 232, 227, 0.46);
+  --text-faint: rgba(236, 232, 227, 0.20);
+  --line: rgba(236, 232, 227, 0.11);
+  --line-strong: rgba(236, 232, 227, 0.22);
+  --accent-green: #00ff66;
+
+  /* Existing aliases re-pointed onto the new palette */
+  --bg-primary: var(--bg);
+  --bg-secondary: var(--bg-alt);
+  --text-primary: var(--text);
+  --text-secondary: var(--text-soft);
+  --accent: var(--accent-green);
+  --bg-text-overlay: rgba(236, 232, 227, 0.05);
+
+  --surface: var(--text-primary);
+  --headline-dark: var(--text);
+  --headline-light: #1a1916;
+  --body-light: #5a5650;
+  --label-muted: var(--text-muted-ref);
+  --label-dark: #3a3d48;
+  --separator: var(--line-strong);
+  --dot-active: var(--text);
+  --dot-rest: #252629;
+  --cta-text: #050505;
+  --cta-border: var(--line-strong);
+  --ease-butter: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --font-primary: var(--font-inter-tight), "Arial Narrow", "Helvetica Neue", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-sans: var(--font-primary);
+
+  --bg-base: var(--bg-primary);
+  --color-surface: var(--text-primary);
+  --text-muted: var(--text-muted-ref);
+  --text-ghost: var(--text-faint);
+  --border-subtle: var(--line);
+  --border-default: var(--line);
+  --border-strong: var(--line-strong);
+  --border-focus: var(--line-strong);
+  --color-base: var(--bg-primary);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-text-ghost: var(--text-ghost);
+}

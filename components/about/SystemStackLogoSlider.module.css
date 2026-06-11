@@ -1,0 +1,67 @@
+.marquee {
+  position: relative;
+  overflow: hidden;
+}
+
+.marqueeTrack {
+  display: flex;
+  width: max-content;
+  animation: stack-marquee 34s linear infinite;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+.logoRow {
+  display: flex;
+  align-items: center;
+  gap: clamp(3rem, 4vw, 4rem);
+  padding-right: clamp(3rem, 4vw, 4rem);
+  width: max-content;
+}
+
+.marquee:hover .marqueeTrack {
+  animation-play-state: paused;
+}
+
+.glowSweep {
+  position: absolute;
+  top: 14%;
+  bottom: 14%;
+  left: -8%;
+  width: 1px;
+  opacity: 0.3;
+  background: linear-gradient(to bottom, transparent, rgba(187, 229, 255, 0.7), transparent);
+  box-shadow: 0 0 20px rgba(137, 202, 255, 0.38);
+  filter: blur(0.2px);
+  animation: stack-glow 11s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.marquee:hover .glowSweep {
+  animation-play-state: paused;
+}
+
+@keyframes stack-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes stack-glow {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(118vw);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marqueeTrack,
+  .glowSweep {
+    animation: none;
+  }
+}

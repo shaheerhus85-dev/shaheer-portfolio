@@ -1,0 +1,22 @@
+.dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.dotActive,
+.dotInactive {
+  height: 2px;
+  border-radius: 2px;
+  transition: width 0.5s var(--ease-butter), background 0.5s ease;
+}
+
+.dotActive {
+  width: 32px;
+  background: var(--color-dot-active);
+}
+
+.dotInactive {
+  width: 18px;
+  background: var(--color-dot-inactive);
+}

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
+  <title id="title">Midjourney</title>
+  <path fill="#8B5CF6" d="M32 5 58 50H6L32 5Z"/>
+  <path fill="#E0E7FF" d="M18 42c4.7-11.7 9.35-17.55 14-17.55 4.65 0 9.3 5.85 14 17.55h-5.1c-3.2-7.42-6.17-11.13-8.9-11.13S26.3 34.58 23.1 42H18Z"/>
+  <circle cx="32" cy="20" r="4.4" fill="#C4B5FD"/>
+</svg>

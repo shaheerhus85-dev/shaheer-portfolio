@@ -1,0 +1,226 @@
+.methodsSection {
+  min-height: 100vh;
+  height: 100vh;
+  background: #050505;
+  color: #ece8e3;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-top: 1px solid rgba(244, 244, 241, 0.1);
+  scroll-margin-top: 1.5rem;
+}
+
+.methodsContainer {
+  width: min(1120px, calc(100% - 96px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(430px, 0.9fr);
+  gap: clamp(72px, 10vw, 150px);
+  align-items: center;
+}
+
+.methodsLeft {
+  min-width: 0;
+}
+
+.sectionLabel {
+  margin: 0 0 clamp(22px, 3vh, 34px);
+  font-size: 10px;
+  line-height: 1;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(236, 232, 227, 0.56);
+}
+
+.methodsHeading {
+  margin: 0;
+  max-width: 760px;
+  font-size: clamp(48px, 5.4vw, 76px);
+  line-height: 0.96;
+  letter-spacing: -0.055em;
+  font-weight: 800;
+  color: #ece8e3;
+}
+
+.methodsCopy {
+  margin: 32px 0 0;
+  max-width: 460px;
+  font-size: clamp(15px, 1.05vw, 17px);
+  line-height: 1.65;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: rgba(236, 232, 227, 0.62);
+}
+
+.methodsList {
+  width: 100%;
+  min-width: 0;
+  margin-top: 0;
+}
+
+.methodRow {
+  display: grid;
+  grid-template-columns: 68px minmax(0, 1fr);
+  gap: 0;
+  padding: 22px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  transition: border-color 250ms ease;
+}
+
+.methodRow:last-child {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.methodNumber {
+  font-size: 10px;
+  line-height: 1.45;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: rgba(236, 232, 227, 0.42);
+  transition: color 250ms ease;
+}
+
+.methodContent {
+  min-width: 0;
+}
+
+.methodTitle {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.45;
+  font-weight: 600;
+  letter-spacing: 0;
+  color: rgba(236, 232, 227, 0.88);
+  transition: transform 250ms ease;
+}
+
+.methodDescription {
+  margin: 8px 0 0;
+  max-width: 420px;
+  font-size: 14px;
+  line-height: 1.6;
+  font-weight: 400;
+  letter-spacing: 0;
+  color: rgba(236, 232, 227, 0.56);
+  transition: color 250ms ease;
+}
+
+.methodResult {
+  margin: 12px 0 0;
+  max-width: 420px;
+  font-size: 12px;
+  line-height: 1.45;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(236, 232, 227, 0.48);
+  transition: color 250ms ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .methodRow:hover {
+    border-top-color: rgba(244, 244, 241, 0.28);
+  }
+
+  .methodRow:last-child:hover {
+    border-bottom-color: rgba(244, 244, 241, 0.28);
+  }
+
+  .methodRow:hover .methodNumber {
+    color: rgba(244, 244, 241, 0.85);
+  }
+
+  .methodRow:hover .methodTitle {
+    transform: translateX(6px);
+  }
+
+  .methodRow:hover .methodDescription {
+    color: rgba(244, 244, 241, 0.7);
+  }
+
+  .methodRow:hover .methodResult {
+    color: rgba(244, 244, 241, 0.66);
+  }
+}
+
+@media (max-width: 900px) {
+  .methodsSection {
+    height: auto;
+    min-height: 100vh;
+    padding: 96px 0 80px;
+    overflow: visible;
+  }
+
+  .methodsContainer {
+    width: min(100% - 48px, 1120px);
+    grid-template-columns: 1fr;
+    gap: 42px;
+  }
+
+  .methodsHeading {
+    max-width: 760px;
+    font-size: clamp(42px, 9vw, 62px);
+    line-height: 0.98;
+  }
+
+  .methodsCopy {
+    max-width: 520px;
+    margin-top: 28px;
+  }
+
+  .methodsList {
+    margin-top: 0;
+  }
+
+  .methodRow {
+    grid-template-columns: 44px minmax(0, 1fr);
+    padding: 22px 0;
+  }
+}
+
+@media (max-width: 560px) {
+  .methodsContainer {
+    width: calc(100% - 32px);
+  }
+
+  .methodsHeading {
+    font-size: clamp(38px, 12vw, 52px);
+    line-height: 1;
+    letter-spacing: -0.045em;
+  }
+
+  .methodRow {
+    grid-template-columns: 44px minmax(0, 1fr);
+    padding: 18px 0;
+  }
+}
+
+@media (max-height: 760px) and (min-width: 901px) {
+  .methodsHeading {
+    font-size: clamp(48px, 5vw, 64px);
+  }
+
+  .methodsCopy {
+    margin-top: 28px;
+    font-size: 16px;
+  }
+
+  .methodRow {
+    padding: 18px 0;
+  }
+
+  .methodResult {
+    margin-top: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .methodRow,
+  .methodNumber,
+  .methodTitle,
+  .methodDescription,
+  .methodResult {
+    transition: none;
+  }
+}

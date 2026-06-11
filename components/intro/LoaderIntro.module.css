@@ -1,0 +1,93 @@
+.container {
+  --digit-size: clamp(118px, 18vw, 340px);
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+.loaderStack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(-2.5vh);
+}
+
+.numberStage {
+  display: block;
+}
+
+.numberFrame {
+  position: relative;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(4px, 0.65vw, 12px);
+  height: 1em;
+  font-size: var(--digit-size);
+  line-height: 1;
+  overflow: hidden;
+}
+
+.digitColumn {
+  width: 0.56em;
+  height: 1em;
+  display: inline-flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.digitInner {
+  display: block;
+  font-size: inherit;
+  font-weight: 500;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+  letter-spacing: -0.02em;
+  line-height: 0.9;
+  transform: translateY(0.03em);
+  color: var(--text-primary);
+}
+
+.digitColumn0 .digitInner {
+  transform: translateY(0.028em);
+}
+
+.digitColumn1 .digitInner,
+.digitColumn2 .digitInner {
+  transform: translateY(0.038em);
+}
+
+.progressWrap {
+  margin-top: clamp(64px, 10vh, 130px);
+  width: clamp(340px, 50vw, 680px);
+}
+
+.progressTrack {
+  position: relative;
+  width: 100%;
+  height: clamp(7px, 0.58vw, 9px);
+  background: rgba(245, 243, 238, 0.22);
+  overflow: hidden;
+}
+
+.progressFill {
+  position: absolute;
+  inset: 0;
+  background: var(--text-primary);
+  transform-origin: left center;
+  transform: scaleX(0);
+  will-change: transform;
+}
+
+@media (max-width: 900px) {
+  .progressWrap {
+    margin-top: clamp(56px, 11vh, 108px);
+    width: clamp(280px, 56vw, 520px);
+  }
+}
