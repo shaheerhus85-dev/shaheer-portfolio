@@ -47,8 +47,8 @@ html.lenis body {
   will-change: opacity, transform;
 }
 
-html:not(.js-ready) [data-reveal],
-html:not(.js-ready) [data-reveal-item],
+html:not(.reveal-ready) [data-reveal],
+html:not(.reveal-ready) [data-reveal-item],
 [data-reveal].is-visible,
 [data-reveal-item].is-visible {
   opacity: 1;

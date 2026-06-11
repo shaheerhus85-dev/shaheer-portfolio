@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Inter_Tight } from "next/font/google";
 import "./globals.css";
 import LenisProvider from "@/components/providers/LenisProvider";
-import ScrollRevealProvider from "@/components/providers/ScrollRevealProvider";
 
 const interTight = Inter_Tight({
   weight: ["400", "700", "900"],
@@ -52,9 +51,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="preload" href="/models/im-signature.glb" as="fetch" crossOrigin="anonymous" />
       </head>
       <body className={`${interTight.className} ${interTight.variable} text-offwhite bg-black`}>
-        <LenisProvider>
-          <ScrollRevealProvider>{children}</ScrollRevealProvider>
-        </LenisProvider>
+        <LenisProvider>{children}</LenisProvider>
       </body>
     </html>
   );

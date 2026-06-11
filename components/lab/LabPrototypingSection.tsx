@@ -35,11 +35,9 @@ export default function LabPrototypingSection() {
           <div className={styles.leftCol}>
             <p data-reveal="text" className={styles.label}>LAB</p>
             <h2 data-reveal="heading" data-reveal-delay="1" className={styles.headline}>
-              Testing ideas
+              Testing ideas before
               <br />
-              before they become
-              <br />
-              real systems.
+              they become real systems.
             </h2>
             <p data-reveal="text" data-reveal-delay="2" className={styles.copy}>
               The lab is where I explore interfaces, automation concepts, AI

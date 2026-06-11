@@ -50,9 +50,7 @@ export default function LabGithubSection() {
             <h2 data-reveal="heading" data-reveal-delay="1" className={styles.headline}>
               Building in public
               <br />
-              through visible
-              <br />
-              iterations.
+              through visible iterations.
             </h2>
             <p data-reveal="text" data-reveal-delay="2" className={styles.copy}>
               GitHub is where I keep a visible trail of experiments, interface iterations, workflow tests, and

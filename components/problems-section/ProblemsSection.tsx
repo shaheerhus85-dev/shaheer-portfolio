@@ -32,8 +32,7 @@ export default function ProblemsSection() {
 
           <h2 data-reveal="heading" data-reveal-delay="1" className={styles.problemsHeading}>
             Business systems break <br />
-            when work stays <br />
-            scattered.
+            when work stays scattered.
           </h2>
 
           <p data-reveal="text" data-reveal-delay="2" className={styles.problemsCopy}>

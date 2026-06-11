@@ -35,9 +35,8 @@ export default function MethodsSection() {
           <p data-reveal="text" className={styles.sectionLabel}>METHODS</p>
 
           <h2 data-reveal="heading" data-reveal-delay="1" className={styles.methodsHeading}>
-            A practical method <br />
-            for turning friction <br />
-            into systems.
+            A practical method for <br />
+            turning friction into systems.
           </h2>
 
           <p data-reveal="text" data-reveal-delay="2" className={styles.methodsCopy}>

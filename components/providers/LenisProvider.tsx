@@ -1,6 +1,8 @@
 "use client";
 
 import { createContext, type ReactNode, useContext, useEffect, useState } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
 
 type LenisProviderProps = {
@@ -17,28 +19,33 @@ export default function LenisProvider({ children }: LenisProviderProps) {
   const [lenisInstance, setLenisInstance] = useState<Lenis | null>(null);
 
   useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+
     const lenis = new Lenis({
-      duration: 0.9,
+      duration: 1.12,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      wheelMultiplier: 0.95,
-      touchMultiplier: 1.1,
+      wheelMultiplier: 0.72,
+      touchMultiplier: 1.15,
       infinite: false,
     });
+
+    document.documentElement.dataset.lenis = "active";
     setLenisInstance(lenis);
 
-    let frameId = 0;
-
-    const raf = (time: number) => {
-      lenis.raf(time);
-      frameId = window.requestAnimationFrame(raf);
+    const update = (time: number) => {
+      lenis.raf(time * 1000);
     };
 
-    frameId = window.requestAnimationFrame(raf);
+    gsap.ticker.add(update);
+    gsap.ticker.lagSmoothing(0);
+    lenis.on("scroll", ScrollTrigger.update);
 
     return () => {
-      window.cancelAnimationFrame(frameId);
+      gsap.ticker.remove(update);
+      lenis.off("scroll", ScrollTrigger.update);
       lenis.destroy();
+      delete document.documentElement.dataset.lenis;
       setLenisInstance(null);
     };
   }, []);

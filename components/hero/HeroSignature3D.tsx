@@ -10,29 +10,29 @@ const DEFAULT_MODEL_PATH = "/models/im-signature.glb";
 const MODEL_TARGET_WIDTH = 8.8;
 const CAMERA_POSITION = [0, 0.1, 8.3] as [number, number, number];
 const CAMERA_FOV = 35;
-const SIGNATURE_POSITION = [0, 0.03, 0] as [number, number, number];
+const SIGNATURE_POSITION = [0, -0.02, 0] as [number, number, number];
 
 const SIGNATURE_SCALE = {
-  desktop: [0.6, 0.59, 0.59] as [number, number, number],
-  tablet: [0.5, 0.49, 0.49] as [number, number, number],
-  mobile: [0.37, 0.36, 0.36] as [number, number, number],
+  desktop: [0.6, 0.62, 0.62] as [number, number, number],
+  tablet: [0.5, 0.52, 0.52] as [number, number, number],
+  mobile: [0.37, 0.39, 0.39] as [number, number, number],
 };
 
 const CHROME_MATERIAL = {
-  color: "#c8c5bf",
+  color: "#bdb7ae",
   metalness: 1,
-  roughness: 0.055,
+  roughness: 0.14,
   clearcoat: 1,
-  clearcoatRoughness: 0.04,
-  envMapIntensity: 5.2,
+  clearcoatRoughness: 0.08,
+  envMapIntensity: 3.8,
 };
 
 const LIGHTING = {
-  ambient: 0.45,
-  key: 4.8,
-  front: 3.2,
-  rim: 3.8,
-  top: 1.8,
+  ambient: 0.34,
+  key: 3.8,
+  front: 2.2,
+  rim: 4.6,
+  top: 1.2,
 };
 
 // Calm premium motion on the top-level GLB group.
@@ -215,7 +215,7 @@ export default function HeroSignature3D({ modelPath = DEFAULT_MODEL_PATH }: Hero
         onCreated={({ gl }) => {
           gl.setClearColor(0x000000, 0);
           gl.toneMapping = THREE.ACESFilmicToneMapping;
-          gl.toneMappingExposure = 1.65;
+          gl.toneMappingExposure = 1.34;
           gl.outputColorSpace = THREE.SRGBColorSpace;
         }}
         shadows={false}
