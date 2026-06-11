@@ -106,7 +106,7 @@ Email: [shaheerhus85@gmail.com](mailto:shaheerhus85@gmail.com)
 
 GitHub: https://github.com/shaheerhus85-dev
 
-WhatsApp: https://wa.me/92339140860
+WhatsApp: https://wa.me/923390140860
 
 Location: Karachi, Pakistan
 
